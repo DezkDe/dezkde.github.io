@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuestro Menú</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <!-- Tu encabezado, como el logo o título -->
+    <h1>Nuestro Menú</h1>
+  </header>
+
+  <main>
+    <section class="menu-item">
+      <h2>Hamburguesa clásica</h2>
+      <p>Descripción: Una hamburguesa clásica con carne, lechuga, tomate y queso.</p>
+      <p>Precio: $5.99</p>
+      <img src="hamburguesa_clasica.jpg" alt="Hamburguesa Clásica">
+      <a href="pedido.html" class="btn">Ordenar ahora</a>
+    </section>
+
+    <section class="menu-item">
+      <h2>Hamburguesa vegetariana</h2>
+      <p>Descripción: Una hamburguesa vegetariana con una mezcla de vegetales frescos.</p>
+      <p>Precio: $6.49</p>
+      <img src="imagenes\Ensalada César.jpeg" alt="Hamburguesa Vegetariana">
+      <a href="pedido.html" class="btn">Ordenar ahora</a>
+    </section>
+
+    <section class="menu-item">
+      <h2>Ensalada César</h2>
+      <p>Descripción: Una fresca ensalada César con pollo a la parrilla y aderezo especial.</p>
+      <p>Precio: $7.99</p>
+      <img src="imagenes\Ensalada César.jpeg" alt="Ensalada César">
+      <a href="pedido.html" class="btn">Ordenar ahora</a>
+    </section>
+
+    <section class="menu-item">
+      <h2>Enchiladas Rojas</h2>
+      <p>Descripción: Una frescas y deliciosas Enchiladas Rojas con pollo a la parrilla y aderezo especial.</p>
+      <p>Precio: $8.15</p>
+      <img src="imagenes\Ensalada César.jpeg" alt="Ensalada César">
+      <a href="pedido.html" class="btn">Ordenar ahora</a>
+    </section>
+    
+    <section class="menu-item">
+        <h2>Enchiladas Rojas</h2>
+        <p>Descripción: Una frescas y deliciosas Enchiladas Rojas con pollo a la parrilla y aderezo especial.</p>
+        <p>Precio: $8.15</p>
+        <img src="imagenes\Ensalada César.jpeg" alt="Ensalada César">
+        <a href="pedido.html" class="btn">Ordenar ahora</a>
+      </section>
+
+    <!-- Puedes agregar más secciones para otros alimentos -->
+  </main>
+  <script>
+    const menuItems = document.querySelectorAll('.menu-item');
+  
+    menuItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const itemName = this.querySelector('h2').textContent;
+        const itemDescription = this.querySelector('p:nth-of-type(2)').textContent;
+        const itemPrice = parseFloat(this.querySelector('p:nth-of-type(3)').textContent.replace('$', ''));
+  
+        const selectedItem = {
+          name: itemName,
+          description: itemDescription,
+          price: itemPrice
+        };
+  
+        localStorage.setItem('selectedItem', JSON.stringify(selectedItem));
+      });
+    });
+  </script>
+  
+  
+  <footer>
+    <!-- Pie de página -->
+    <p>&copy; 2023 TuRestaurante</p>
+  </footer>
+</body>
+</html>

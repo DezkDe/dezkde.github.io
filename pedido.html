@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Realizar Pedido</title>
+  <link rel="stylesheet" href="styles_pedido.css">
+</head>
+<body>
+  <header>
+    <!-- Encabezado de la página de pedido -->
+    <h1>Realizar Pedido</h1>
+  </header>
+
+  <main>
+    <section class="order-details">
+      <h2>Detalles del Pedido</h2>
+      <div class="order-item">
+        <img src="hamburguesa_clasica.jpg" alt="Hamburguesa Clásica">
+        <div class="item-info">
+          <h3>Hamburguesa clásica</h3>
+          <p>Precio: $5.99</p>
+        </div>
+      </div>
+      <!-- Aquí puedes mostrar más detalles del pedido según tu proceso de compra -->
+    </section>
+
+    <section class="customer-details">
+      <h2>Detalles del Cliente</h2>
+      <form action="procesar_pedido.php" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="direccion">Dirección de entrega:</label>
+        <input type="text" id="direccion" name="direccion" required>
+
+        <!-- Puedes agregar más campos según los detalles necesarios -->
+
+        <input type="submit" value="Realizar Pedido" class="btn">
+      </form>
+    </section>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const orderDetails = document.querySelector('.order-details');
+      const storedItem = localStorage.getItem('selectedItem');
+  
+      if (storedItem) {
+        const selectedItem = JSON.parse(storedItem);
+        const orderItem = `
+          <div class="order-item">
+            <div class="item-info">
+              <h3>${selectedItem.name}</h3>
+              <p>${selectedItem.description}</p>
+              <p>${selectedItem.price}</p>
+            </div>
+          </div>
+        `;
+        orderDetails.innerHTML = `<h2>Detalles del Pedido</h2>${orderItem}`;
+      }
+    });
+  </script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AY3SsnCXGGQ8ggnSLlxxVyEnICGNCUfHZYJ5DbBXDDV9nXvHKLtVhvYi0zeOFR0zddhUPR8gabx9qgD4"></script>
+
+  <!-- Botón de PayPal -->
+  <div id="paypal-button-container"></div>
+  
+  <script>
+    // Renderiza el botón de PayPal
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '5.99' // Aquí coloca el precio del producto
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          // Puede realizar acciones después de que se haya aprobado el pago
+          alert('Pago completado por ' + details.payer.name.given_name);
+          // Aquí puedes redirigir a una página de confirmación, etc.
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+  
+  <footer>
+    <!-- Pie de página -->
+    <p>&copy; 2023 TuRestaurante</p>
+  </footer>
+</body>
+</html>
